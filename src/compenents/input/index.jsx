@@ -8,7 +8,6 @@ const Input = () => {
     return (
         <>
             <input className="default-input"/>
-            <Button placehouder />
         </>
     )
 }

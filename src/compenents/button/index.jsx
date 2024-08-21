@@ -1,9 +1,13 @@
 import React from "react"
 
-const Button = (placehouder) => {
+import "./index.css"
+
+const Button = ({placehouder,onClick}) => {
     return (
         <>
-            <button value={placehouder}/>
+        <div>
+            <button onClick={onClick} className="button">{placehouder}</button>
+        </div>
         </>
     )
 }

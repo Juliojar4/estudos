@@ -1,26 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useState } from "react";
 
 import Button from "../compenents/button";
 import Input from "../compenents/input";
 
+import adicionarDocumento from "../db/post";
+
 const Home = () => {
 
     const [tarefa, setTarefa] = useState([])
 
     const handleClick = () => {
-
-        const tarefaCopy = [...tarefa] 
-
         const inputValue  = document.getElementsByClassName("default-input")[0].value
 
-        tarefaCopy.push(inputValue)
+        const newArray = [...tarefa, inputValue]
 
-        console.log(tarefaCopy);
+        console.log(newArray);
 
-        setTarefa(inputValue)
+        setTarefa(newArray)
     };
+
+    useEffect(() => {
+        const handleSubmit = async () => {
+  
+            try {
+                await adicionarDocumento("julio");
+            } catch (error) {
+                console.error('Erro ao adicionar documento:', error);
+            }
+        };
+
+        handleSubmit()
+    },[])
 
     return (
         
@@ -30,7 +42,11 @@ const Home = () => {
             <Button placehouder={"Adicionar Tarefa"} onClick={() => handleClick()}/>
 
             {tarefa && 
-                <div>{tarefa}</div>
+                tarefa.map((e, key) => {
+                    return(
+                        <div key={`${key}`}>{e}</div>
+                    )
+                })
             }
         </div>
     )

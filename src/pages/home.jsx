@@ -2,7 +2,8 @@ import "./index.css"
 
 import React, { useEffect, useState } from "react";
 
-import PostInToDb from "../db/post";
+import PostInToDb from "../helpers/post";
+import fetchProducts from "../helpers/getProduct";
 
 import Button from "../compenents/button/index";
 import Input from "../compenents/input/index";
@@ -12,28 +13,32 @@ const Home = () => {
 
     const handleClick = async (e) => {
 
-        e.preventDefault()
+        e.preventDefault();
 
         const inputValueName  = document.querySelector('input[name="name"]').value;
         const inputValuePreco  = document.querySelector('input[name="preco"]').value;
         const inputValueCodigo  = document.querySelector('input[name="codigo-de-barra"]').value;
   
         
-        const obj = {
+        const productInformation = {
             name : inputValueName,
             preco : inputValuePreco,
             codigoBarra: inputValueCodigo,
         }
+        
+        fetchProducts()
 
-        setProduto(obj)
+ 
+
+        setProduto(productInformation);
 
     };
-    
+
     useEffect(() => {
 
         if(produto) {
-            PostInToDb('produto', produto, produto)
-        }
+            PostInToDb('produto', produto, produto);
+        };
 
     }, [produto]);
 

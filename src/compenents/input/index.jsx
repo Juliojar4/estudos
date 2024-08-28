@@ -1,13 +1,13 @@
 import React from "react"
 import "./index.css"
 
-import Button from "../button"
 
-const Input = () => {
+const Input = ({name, label}) => {
 
     return (
         <>
-            <input className="default-input"/>
+            <label htmlFor={name}>{label}</label>
+            <input name={name} className="default-input"/>
         </>
     )
 }

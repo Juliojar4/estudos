@@ -1,55 +1,57 @@
-import React, { useEffect } from "react";
+import "./index.css"
 
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import Button from "../compenents/button";
-import Input from "../compenents/input";
+import PostInToDb from "../db/post";
 
-import adicionarDocumento from "../db/post";
+import Button from "../compenents/button/index";
+import Input from "../compenents/input/index";
 
 const Home = () => {
+    const [produto, setProduto] = useState();
 
-    const [tarefa, setTarefa] = useState([])
+    const handleClick = async (e) => {
 
-    const handleClick = () => {
-        const inputValue  = document.getElementsByClassName("default-input")[0].value
+        e.preventDefault()
 
-        const newArray = [...tarefa, inputValue]
-
-        console.log(newArray);
-
-        setTarefa(newArray)
-    };
-
-    useEffect(() => {
-        const handleSubmit = async () => {
+        const inputValueName  = document.querySelector('input[name="name"]').value;
+        const inputValuePreco  = document.querySelector('input[name="preco"]').value;
+        const inputValueCodigo  = document.querySelector('input[name="codigo-de-barra"]').value;
   
-            try {
-                await adicionarDocumento("julio");
-            } catch (error) {
-                console.error('Erro ao adicionar documento:', error);
-            }
-        };
+        
+        const obj = {
+            name : inputValueName,
+            preco : inputValuePreco,
+            codigoBarra: inputValueCodigo,
+        }
 
-        handleSubmit()
-    },[])
+        setProduto(obj)
+
+    };
+    
+    useEffect(() => {
+
+        if(produto) {
+            PostInToDb('produto', produto, produto)
+        }
+
+    }, [produto]);
+
 
     return (
-        
         <div>
-            <h1>Barra de tarefa </h1>
-            <Input/>
-            <Button placehouder={"Adicionar Tarefa"} onClick={() => handleClick()}/>
-
-            {tarefa && 
-                tarefa.map((e, key) => {
-                    return(
-                        <div key={`${key}`}>{e}</div>
-                    )
-                })
-            }
+            <h1>Cadastre um Produto</h1>
+            <form> 
+                <div className="grup-form">
+                    <Input name={"name"} label={"Nome do produto"}/>
+                    <Input name={"preco"} label={"Qual é o Preço"}/>
+                    <Input name={"codigo-de-barra"} label={"Qual é o Codigo"}/>
+                    <Button placehouder={"Adicionar o codigo de Barra"} onClick={(e) => handleClick(e)}/>
+                </div>
+            </form>
+           
         </div>
-    )
-}
+    );
+};
 
 export default Home;

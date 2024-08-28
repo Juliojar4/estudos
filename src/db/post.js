@@ -1,15 +1,17 @@
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from './firebase'; // Ajuste o caminho conforme necessário
+import { firestore } from "../db/firebase"; 
+import { collection, addDoc } from "firebase/firestore";
 
-const adicionarDocumento = async () => {
-  try {
-    const docRef = await addDoc(collection(db, 'nome_projeto'), {
-      nome: 'Exemplo',
-    });
-    console.log('Documento adicionado com ID:', docRef.id);
-  } catch (error) {
-    console.error('Erro ao adicionar documento:', error);
-  }
-};
+const PostInToDb = (table, keyOfTable, value) => {
 
-export default adicionarDocumento
+    const sendToDb = async () => {
+        try {
+            await addDoc(collection(firestore, table), { [keyOfTable] : value });
+        } catch (error) {
+            console.error('Erro ao adicionar documento:', error);
+        }
+    }
+    sendToDb()
+
+} 
+
+export default PostInToDb

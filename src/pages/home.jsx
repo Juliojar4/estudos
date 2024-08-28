@@ -2,6 +2,8 @@ import "./index.css"
 
 import React, { useEffect, useState } from "react";
 
+import useScanDetection from "use-scan-detection";
+
 import PostInToDb from "../helpers/post";
 import fetchProducts from "../helpers/getProduct";
 
@@ -10,7 +12,15 @@ import Input from "../compenents/input/index";
 
 const Home = () => {
     const [produto, setProduto] = useState();
+    const [barcode, setBarcode] = useState();
 
+   
+  
+    useScanDetection({
+        onComplete: setBarcode,
+        minLength:3
+    })
+    
     const handleClick = async (e) => {
 
         e.preventDefault();
@@ -19,7 +29,6 @@ const Home = () => {
         const inputValuePreco  = document.querySelector('input[name="preco"]').value;
         const inputValueCodigo  = document.querySelector('input[name="codigo-de-barra"]').value;
   
-        
         const productInformation = {
             name : inputValueName,
             preco : inputValuePreco,
@@ -28,12 +37,10 @@ const Home = () => {
         
         fetchProducts()
 
- 
-
         setProduto(productInformation);
 
     };
-
+ 
     useEffect(() => {
 
         if(produto) {
@@ -50,11 +57,13 @@ const Home = () => {
                 <div className="grup-form">
                     <Input name={"name"} label={"Nome do produto"}/>
                     <Input name={"preco"} label={"Qual é o Preço"}/>
-                    <Input name={"codigo-de-barra"} label={"Qual é o Codigo"}/>
-                    <Button placehouder={"Adicionar o codigo de Barra"} onClick={(e) => handleClick(e)}/>
+                    <Input name={"codigo-de-barra"} label={"Qual é o codigo de barra"} value={barcode} readonly/>
+                    <Button placehouder={"Adicionar o codigo de Barra"} onClick={(e) => handleClick(e)} />
                 </div>
             </form>
-           
+            <div className="modal">
+            
+            </div>
         </div>
     );
 };

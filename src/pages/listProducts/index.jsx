@@ -14,8 +14,11 @@ const ListProducts = () => {
 
         const feachData = async () => {
             try{
-                const data = await fetchProducts()
-                setProducts(data)
+                const data = await fetchProducts();
+                setProducts(data);
+                const table = document.getElementById("table");
+                table.classList.remove("table-hidden")
+                table.classList.add("show-table")
             } catch (err) {
                 console.log(err);
             }
@@ -26,8 +29,8 @@ const ListProducts = () => {
  
 
     return (
-        <div>
-            <table>
+        <div>   
+            <table id="table" className="table-hidden">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>

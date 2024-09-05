@@ -41,11 +41,11 @@ a {
     color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-from {
-    transform: rotate(0deg);
-}
-to {
-    transform: rotate(360deg);
-}
-}
+.default-input[readonly] {
+
+    background-color: #5a5757;
+
+    &:focus-visible {
+        border: none;
+    }
+}  

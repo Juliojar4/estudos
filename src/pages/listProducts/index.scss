@@ -1,6 +1,7 @@
 table {
     border-collapse: collapse;
     border: 2px solid black;
+    border-radius: 20px;
     font-family: sans-serif;
     letter-spacing: 1px;
   }
@@ -42,4 +43,19 @@ table {
   tfoot td {
     font-weight: bold;
   }
+
+.table-hidden {
+  opacity: 0;
+}
+
+ 
+
+@keyframes fade-in {
+  0% {
+    overflow: 0;
+  }
+  100% {
+    overflow: 1;
+  }
+}
   

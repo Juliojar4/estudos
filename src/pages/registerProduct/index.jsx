@@ -1,4 +1,4 @@
-import "./index.css"
+import "./index.scss"
 
 import React, { useEffect, useState } from "react";
 
@@ -9,6 +9,8 @@ import fetchProducts from "../../helpers/getProduct";
 
 import Button from "../../compenents/button/index";
 import Input from "../../compenents/input/index";
+
+import SuccessModal from "../../compenents/successModal";
 
 const Register = () => {
     const [produto, setProduto] = useState();
@@ -33,28 +35,27 @@ const Register = () => {
             preco : inputValuePreco,
             codigoBarra: inputValueCodigo,
         }
-    
-
         setProduto(productInformation);
-
     };
     fetchProducts()
     useEffect(() => {
 
         if(produto) {
             PostInToDb('produto', produto, produto);
+    
         };
 
     }, [produto]);
 
     return (
         <div>
+            <SuccessModal/>
             <h1>Cadastre um Produto</h1>
             <form> 
                 <div className="grup-form">
                     <Input name={"name"} label={"Nome do produto"}/>
                     <Input name={"preco"} label={"Qual é o Preço"}/>
-                    <Input name={"codigo-de-barra"} label={"Qual é o codigo de barra"} value={barcode} readonly/>
+                    <Input name={"codigo-de-barra"} label={"Qual é o codigo de barra"} value={barcode} readonly={true} />
                     <Button placehouder={"Adicionar o codigo de Barra"} onClick={(e) => handleClick(e)} />
                 </div>
             </form>

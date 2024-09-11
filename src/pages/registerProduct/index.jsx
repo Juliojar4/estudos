@@ -2,9 +2,11 @@ import "./index.scss"
 
 import React, { useEffect, useState } from "react";
 
+import { useSelector } from 'react-redux';
+
 import useScanDetection from "use-scan-detection";
 
-import PostInToDb from "../../helpers/post";
+import usePostInToDb from "../../hooks/post";
 import fetchProducts from "../../helpers/getProduct";
 
 import Button from "../../compenents/button/index";
@@ -16,6 +18,11 @@ const Register = () => {
     const [produto, setProduto] = useState();
     const [barcode, setBarcode] = useState();
 
+    const postInToData = usePostInToDb();
+
+    const isTriggered = useSelector((state) => state.counter.value);
+
+    console.log(isTriggered);
   
     useScanDetection({
         onComplete: setBarcode,
@@ -41,15 +48,14 @@ const Register = () => {
     useEffect(() => {
 
         if(produto) {
-            PostInToDb('produto', produto, produto);
-    
+            postInToData('produto', produto, produto);
         };
 
-    }, [produto]);
+    }, [produto,postInToData]);
 
     return (
         <div>
-            <SuccessModal/>
+            {isTriggered && <SuccessModal/>}
             <h1>Cadastre um Produto</h1>
             <form> 
                 <div className="grup-form">
